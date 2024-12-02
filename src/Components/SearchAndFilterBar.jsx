@@ -26,22 +26,26 @@ const SearchAndFilterBar = () => {
   const handleChange = (event) => {
     setCity(event.target.value);
   };
+
   return (
-    <Paper sx={{ p: 2 }} variant="outlined">
+    <Paper
+      sx={{
+        p: 2,
+        borderRadius: "1rem",
+        boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+      }}
+      variant="outlined"
+    >
       <Grid container spacing={2}>
         <Grid size={{ xs: 3, md: 2 }}>
-          <FormControl variant="standard" fullWidth sx={{ mt: 1 }}>
-            <InputLabel id="demo-simple-select-standard-label">
-              Select City
-            </InputLabel>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Select City</InputLabel>
             <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              label="Select City"
-              variant="outlined"
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               value={city}
+              label="Select City"
               onChange={handleChange}
-              fullWidth
             >
               <MenuItem value="">
                 <em>None</em>
@@ -55,7 +59,7 @@ const SearchAndFilterBar = () => {
           </FormControl>
         </Grid>
         <Grid size={{ xs: 6, md: 8 }}>
-          <FormControl variant="standard" fullWidth sx={{ mt: 1 }}>
+          <FormControl variant="standard" fullWidth>
             <TextField
               id="outlined-required"
               label="Search User"
@@ -68,7 +72,7 @@ const SearchAndFilterBar = () => {
             variant="contained"
             size="large"
             fullWidth
-            sx={{ height: "54px", mt: 1 }}
+            sx={{ height: "54px" }}
           >
             Search
           </Button>

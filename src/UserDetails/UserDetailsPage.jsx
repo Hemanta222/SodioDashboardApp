@@ -152,7 +152,10 @@ const UserDetailsPage = () => {
               <Button
                 size="small"
                 variant="contained"
-                sx={{ marginLeft: ".5rem" }}
+                sx={{
+                  marginLeft: ".5rem",
+                  borderRadius: "1rem",
+                }}
                 onClick={() => {
                   navigate(`/`);
                 }}

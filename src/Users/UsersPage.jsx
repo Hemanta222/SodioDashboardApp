@@ -12,7 +12,7 @@ const url = import.meta.env.VITE_USER_URL;
 const UsersPage = () => {
   //   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { users, setUsers, showAlert } = useContextApi();
+  const { users, setUsers, showAlert, city } = useContextApi();
 
   useEffect(() => {
     axios
@@ -30,6 +30,7 @@ const UsersPage = () => {
         setLoading(false);
       });
   }, []);
+  useEffect(() => {}, []);
 
   if (loading) {
     return (
@@ -40,7 +41,7 @@ const UsersPage = () => {
               size={{ xs: 12, sm: 6, md: 4 }}
               key={new Date().getTime() + "_" + index}
             >
-              <Card sx={{ height: 180, padding: "1rem" }}>
+              <Card sx={{ height: 180, padding: "1rem", borderRadius: "1rem" }}>
                 <SkeletonLoader />
               </Card>
             </Grid>

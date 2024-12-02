@@ -16,7 +16,17 @@ const UserCard = (props) => {
   const { user } = props;
   const navigate = useNavigate();
   return (
-    <Card sx={{ width: "100%" }}>
+    <Card
+      sx={{
+        width: "100%",
+        borderRadius: "1rem",
+        transition: "all 0.2s ease",
+        "&:hover": {
+          boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+          transform: "scale(1.01)",
+        },
+      }}
+    >
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {user.name}
@@ -41,11 +51,14 @@ const UserCard = (props) => {
           </Typography>
         </Stack>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ marginBottom: ".5rem" }}>
         <Button
           size="small"
           variant="contained"
-          sx={{ marginLeft: ".5rem", }}
+          sx={{
+            marginLeft: ".5rem",
+            borderRadius: "1rem",
+          }}
           onClick={() => {
             navigate(`/${user.id}`);
           }}
