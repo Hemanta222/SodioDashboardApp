@@ -13,13 +13,12 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
-import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { useEffect, useState } from "react";
 import SkeletonLoader from "../Components/Loader";
 import axios from "axios";
 import { useContextApi } from "../Context/Context";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const url = import.meta.env.VITE_USER_URL;
 // Ensure the URL includes the protocol
@@ -47,7 +46,6 @@ const UserDetailsPage = () => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log("err", err);
           if (err?.response?.data?.message) {
             showAlert(err?.response?.data?.message, "error");
           } else {
@@ -67,11 +65,10 @@ const UserDetailsPage = () => {
   }
 
   return (
-    <Paper sx={{ padding: "2rem" }} elevation={0}>
+    <Box sx={{ padding: "2rem" }} elevation={0}>
       {userDetails ? (
         <>
-          {" "}
-          <Card elevation={0} sx={{ width: "100%", marginBottom: "1rem" }}>
+          <Box sx={{ width: "100%", marginBottom: "1rem" }}>
             <Breadcrumbs aria-label="breadcrumb">
               <Link
                 underline="none"
@@ -90,8 +87,8 @@ const UserDetailsPage = () => {
                 User Details
               </Link>
             </Breadcrumbs>
-          </Card>
-          <Card sx={{ width: "100%" }} variant="outlined">
+          </Box>
+          <Card sx={{ width: "100%", borderRadius: "2rem" }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {userDetails.name}
@@ -148,7 +145,7 @@ const UserDetailsPage = () => {
                 </Typography>
               </Stack>
             </CardContent>
-            <CardActions>
+            <CardActions sx={{ mb: 1 }}>
               <Button
                 size="small"
                 variant="contained"
@@ -167,7 +164,7 @@ const UserDetailsPage = () => {
           </Card>
         </>
       ) : null}
-    </Paper>
+    </Box>
   );
 };
 

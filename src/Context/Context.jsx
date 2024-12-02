@@ -13,7 +13,7 @@ export const ContextProvider = ({ children }) => {
   });
   const [users, setUsers] = useState([]);
   const [city, setCity] = useState("");
-
+  const [searchText, setSearchText] = useState("");
   const showAlert = useCallback((message, severity = "info") => {
     setAlert({ open: true, message, severity });
   }, []);
@@ -24,7 +24,17 @@ export const ContextProvider = ({ children }) => {
 
   return (
     <ContextApi.Provider
-      value={{ alert, showAlert, closeAlert, users, setUsers, city, setCity }}
+      value={{
+        alert,
+        showAlert,
+        closeAlert,
+        users,
+        setUsers,
+        city,
+        setCity,
+        searchText,
+        setSearchText,
+      }}
     >
       {children}
     </ContextApi.Provider>

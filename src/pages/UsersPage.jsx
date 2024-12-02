@@ -1,18 +1,21 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import SkeletonLoader from "../Components/Loader";
 import { Card, Paper } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import UserCard from "../Components/UserCard";
 import { useContextApi } from "../Context/Context";
 import SearchAndFilterBar from "../Components/SearchAndFilterBar";
+import { filterRecordsWithRegex } from "../utils/textSearch";
+import { debounce } from "../utils/debounce";
 const url = import.meta.env.VITE_USER_URL;
 
 const UsersPage = () => {
   //   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { users, setUsers, showAlert, city } = useContextApi();
+  const { users, setUsers, showAlert, city, searchText } = useContextApi();
+  const [records, setRecords] = useState([]);
 
   useEffect(() => {
     axios
@@ -30,7 +33,38 @@ const UsersPage = () => {
         setLoading(false);
       });
   }, []);
-  useEffect(() => {}, []);
+
+  // Debounced filter function
+  const debouncedFilter = useMemo(
+    () =>
+      debounce((text, data) => {
+        const filtered = filterRecordsWithRegex(data, text, "name");
+        setRecords(filtered);
+      }, 300),
+    []
+  );
+
+  useEffect(() => {
+    if (!users || !users.length) {
+      setRecords([]);
+      return;
+    }
+
+    // Filter users based on city
+    let filteredRecords = city
+      ? users.filter((user) => user.address.city === city)
+      : users;
+
+    // Apply debounced search filter
+    if (searchText) {
+      debouncedFilter(searchText, filteredRecords);
+    } else {
+      setRecords(filteredRecords);
+    }
+
+    // Update records
+    setRecords(filteredRecords);
+  }, [city, searchText, users]);
 
   if (loading) {
     return (
@@ -52,16 +86,20 @@ const UsersPage = () => {
   }
 
   return (
-    <Paper sx={{ padding: "2rem" }}>
+    <Paper
+      sx={{ padding: "2rem", backgroundColor: "transparent" }}
+      elevation={0}
+    >
       <SearchAndFilterBar />
       <br />
-      <Grid container spacing={2}>
-        {users.map((user) => (
+      <Grid container spacing={3}>
+        {records.map((user) => (
           <Grid size={{ xs: 12, sm: 6, md: 4 }} key={user.id}>
             <UserCard user={user} />
           </Grid>
         ))}
       </Grid>
+      <br />
     </Paper>
   );
 };
